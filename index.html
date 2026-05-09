@@ -3,42 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Linux Simulation</title>
+    <title>Windows 10 Web Simulation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="desktop-screen" class="fullscreen">
-        <div class="top-panel">
-            <div class="panel-left">
-                <span class="activities">Activities</span>
-                <span class="app-name">Terminal</span>
+    <div id="desktop">
+        <div class="icon-container">
+            <div class="desktop-item">
+                <img src="https://img.icons8.com/color/48/000000/recycle-bin.png" alt="Recycle Bin">
+                <span>Recycle Bin</span>
             </div>
-            <div class="panel-center" id="clock">May 8 21:16</div>
-            <div class="panel-right">
-                <span>📶</span>
-                <span>🔊</span>
-                <span>🔋</span>
+            <div class="desktop-item">
+                <img src="https://img.icons8.com/color/48/000000/monitor.png" alt="This PC">
+                <span>This PC</span>
             </div>
         </div>
 
-        <div class="desktop-area">
-            <div class="icon" onclick="openTerminal()">
-                <span class="icon-graphic">🐚</span>
-                <p>Terminal</p>
+        <div id="start-menu" class="win-hidden">
+            <div class="start-sidebar">
+                <div class="side-item">👤</div>
+                <div class="side-item">⚙️</div>
+                <div class="side-item">⏻</div>
             </div>
-            <div class="icon">
-                <span class="icon-graphic">📁</span>
-                <p>Home</p>
+            <div class="start-apps">
+                <p class="section-label">Recently added</p>
+                <div class="app-row">Calculator</div>
+                <div class="app-row">Edge</div>
+                <div class="app-row">Notepad</div>
             </div>
         </div>
 
-        <div class="dock-container">
-            <div class="dock">
-                <div class="dock-item">🌐</div>
-                <div class="dock-item">📂</div>
-                <div class="dock-item active">🐚</div>
-                <div class="dock-item">⚙️</div>
+        <div id="taskbar">
+            <div class="taskbar-left">
+                <button id="start-btn" title="Start">
+                    <img src="https://img.icons8.com/color/24/000000/windows-10.png">
+                </button>
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Type here to search">
+                </div>
+                <div class="taskbar-apps">
+                    <img src="https://img.icons8.com/color/28/000000/folder-invoices.png" title="File Explorer">
+                    <img src="https://img.icons8.com/color/28/000000/microsoft-edge.png" title="Edge">
+                </div>
+            </div>
+            
+            <div class="taskbar-right">
+                <div class="tray-icon">⌃</div>
+                <div class="tray-icon">🔊</div>
+                <div class="tray-icon">🌐</div>
+                <div class="datetime" id="datetime">
+                    <div id="time">12:00 PM</div>
+                    <div id="date">5/8/2026</div>
+                </div>
+                <div class="show-desktop"></div>
             </div>
         </div>
     </div>
