@@ -1,62 +1,63 @@
-// --- 1. BOOT SEQUENCE ---
-const biosStatus = document.getElementById('bios-status');
+// script.js
 
-function runBoot() {
-    setTimeout(() => { biosStatus.innerText = "SATA Master: OK | Booting Windows..."; }, 1500);
+// 1. The Boot Sequence Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const biosScreen = document.getElementById('bios-screen');
+    const desktopScreen = document.getElementById('desktop-screen');
+    const bootText = document.getElementById('boot-text');
+
+    // Simulate lines of BIOS loading
     setTimeout(() => {
-        document.getElementById('bios-layer').classList.add('hidden');
-        document.getElementById('boot-layer').classList.remove('hidden');
+        bootText.innerText = "Auto-Detecting SATA Port 1... Found Drive";
+        bootText.classList.remove('blinking');
+    }, 2000);
+
+    setTimeout(() => {
+        const p = document.createElement('p');
+        p.innerText = "Booting from Hard Disk...";
+        biosScreen.appendChild(p);
     }, 3000);
+
+    // Transition to Desktop after 5 seconds
     setTimeout(() => {
-        document.getElementById('boot-layer').classList.add('hidden');
-        document.getElementById('desktop-layer').classList.remove('hidden');
-    }, 7000);
-}
-
-// --- 2. WINDOW MANAGER ---
-function openApp(id) {
-    const win = document.getElementById(id);
-    win.classList.remove('hidden');
-    makeDraggable(win);
-}
-
-function closeApp(id) {
-    document.getElementById(id).classList.add('hidden');
-}
-
-// --- 3. DRAG LOGIC ---
-function makeDraggable(el) {
-    const header = el.querySelector('.window-header');
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    
-    header.onmousedown = (e) => {
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = () => { document.onmousemove = null; document.onmouseup = null; };
-        document.onmousemove = (e) => {
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            el.style.top = (el.offsetTop - pos2) + "px";
-            el.style.left = (el.offsetLeft - pos1) + "px";
-        };
-    };
-}
-
-// --- 4. START MENU & CLOCK ---
-document.getElementById('start-btn').onclick = () => {
-    document.getElementById('start-menu').classList.toggle('hidden');
-};
-
-document.querySelectorAll('.desktop-item').forEach(item => {
-    item.ondblclick = () => openApp('window-explorer');
+        biosScreen.classList.add('hidden');
+        desktopScreen.classList.remove('hidden');
+        startClock();
+    }, 5000);
 });
 
-function updateClock() {
-    const time = new Date();
-    document.getElementById('clock-display').innerText = time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-}
+// 2. Start Menu Toggle
+const startButton = document.getElementById('start-button');
+const startMenu = document.getElementById('start-menu');
 
-setInterval(updateClock, 1000);
-window.onload = runBoot;
+startButton.addEventListener('click', () => {
+    startMenu.classList.toggle('hidden');
+});
+
+// Hide start menu if clicking outside of it
+document.addEventListener('click', (event) => {
+    if (!startButton.contains(event.target) && !startMenu.contains(event.target)) {
+        startMenu.classList.add('hidden');
+    }
+});
+
+// 3. Real-time Clock
+function startClock() {
+    const clockElement = document.getElementById('clock');
+    
+    function updateTime() {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        clockElement.innerText = `${hours}:${minutes} ${ampm}`;
+    }
+    
+    updateTime(); // Run immediately
+    setInterval(updateTime, 1000); // Update every second
+}
