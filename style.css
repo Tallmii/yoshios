@@ -1,145 +1,112 @@
-/* style.css */
 * { box-sizing: border-box; }
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
+body, html { margin: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
 
 #desktop {
-    width: 100vw;
+    background: url('https://images.wallpapersden.com/image/download/windows-10-original-4k_a2htbW6UmZqaraWkpJRmbmdlrWZlbWU.jpg') center/cover;
     height: 100vh;
-    background: url('https://wallpapercave.com/wp/wp4337624.jpg') no-repeat center center fixed;
-    background-size: cover;
+    padding: 10px;
     position: relative;
 }
 
-/* Icons */
-.icon-container {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    width: 100px;
-}
-
-.desktop-item {
+/* Desktop Icon */
+.icon {
+    width: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: white;
     font-size: 12px;
-    padding: 10px 0;
-    margin-bottom: 5px;
-    border: 1px solid transparent;
+    padding: 10px;
+    cursor: pointer;
 }
+.icon:hover { background: rgba(255, 255, 255, 0.15); }
+.icon img { margin-bottom: 5px; }
 
-.desktop-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.desktop-item img { width: 35px; margin-bottom: 5px; }
-
-/* Taskbar */
-#taskbar {
+/* Windows */
+.window {
     position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 450px;
+    height: 350px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    border: 1px solid #0078d7;
+    z-index: 10;
+}
+
+.window-header {
+    background: #fff;
+    height: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    cursor: default;
+}
+
+.header-title { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.win-btn { border: none; background: transparent; width: 45px; height: 32px; transition: 0.2s; }
+.win-btn:hover { background: #e5e5e5; }
+.win-btn:last-child:hover { background: #e81123; color: white; }
+
+.window-content { flex-grow: 1; padding: 20px; background: #f2f2f2; }
+
+/* Taskbar & Start Menu (Acrylic) */
+#taskbar, #start-menu {
+    background: rgba(25, 25, 25, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: white;
+}
+
+#taskbar {
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 40px;
-    background: rgba(28, 28, 28, 0.85);
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: space-between;
-    z-index: 100;
-}
-
-.taskbar-left, .taskbar-right { display: flex; align-items: center; }
-
-#start-btn {
-    width: 48px;
-    height: 100%;
-    background: transparent;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.2s;
-}
-
-#start-btn:hover { background: rgba(255, 255, 255, 0.1); }
-
-.search-box {
-    background: white;
-    height: 100%;
-    width: 200px;
     display: flex;
     align-items: center;
-    padding: 0 10px;
-    margin-right: 10px;
+    z-index: 1000;
 }
 
-.search-box input {
-    border: none;
-    outline: none;
-    width: 100%;
-    font-size: 14px;
-    margin-left: 5px;
-}
+#start-btn { height: 100%; width: 48px; border: none; background: transparent; cursor: pointer; }
+#start-btn:hover { background: rgba(255,255,255,0.1); }
 
-.taskbar-apps img { margin: 0 8px; cursor: pointer; }
+.system-tray { margin-left: auto; padding-right: 15px; font-size: 12px; }
 
-/* Right side taskbar */
-.tray-icon { padding: 0 5px; color: white; cursor: pointer; font-size: 14px; }
-.datetime {
-    color: white;
-    font-size: 11px;
-    text-align: center;
-    padding: 0 10px;
-    cursor: pointer;
-}
-
-.show-desktop {
-    width: 5px;
-    height: 100%;
-    border-left: 1px solid rgba(255,255,255,0.2);
-    margin-left: 5px;
-}
-
-/* Start Menu Styling */
 #start-menu {
-    position: absolute;
+    position: fixed;
     bottom: 40px;
     left: 0;
-    width: 350px;
+    width: 600px;
     height: 500px;
-    background: rgba(30, 30, 30, 0.95);
-    backdrop-filter: blur(15px);
-    color: white;
     display: flex;
+    transition: transform 0.3s ease;
 }
 
-.win-hidden { display: none !important; }
+#start-menu.hidden { transform: translateY(600px); }
 
-.start-sidebar {
-    width: 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: 10px;
-    background: rgba(0,0,0,0.2);
+.start-sidebar { width: 48px; display: flex; flex-direction: column; padding: 10px 0; }
+.start-tiles { flex-grow: 1; padding: 20px; }
+
+/* Live Tile Flip */
+.tile-container { perspective: 1000px; width: 100px; height: 100px; }
+.tile-inner {
+    width: 100%; height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    animation: flipTile 8s infinite ease-in-out;
 }
-
-.side-item {
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+@keyframes flipTile {
+    0%, 45% { transform: rotateY(0deg); }
+    50%, 95% { transform: rotateY(180deg); }
 }
-
-.start-apps { padding: 15px; flex-grow: 1; }
-.section-label { font-size: 12px; color: #aaa; margin-bottom: 10px; }
-.app-row { padding: 8px 0; font-size: 13px; cursor: pointer; }
-.app-row:hover { background: rgba(255,255,255,0.1); }
+.tile-front, .tile-back {
+    position: absolute; width: 100%; height: 100%;
+    backface-visibility: hidden; background: #0078d7;
+    display: flex; align-items: center; justify-content: center; font-size: 12px;
+}
+.tile-back { transform: rotateY(180deg); background: #005a9e; }
