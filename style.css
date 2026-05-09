@@ -1,95 +1,145 @@
 /* style.css */
+* { box-sizing: border-box; }
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow: hidden;
-    font-family: 'Ubuntu', sans-serif;
-    background: #2c3e50;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.fullscreen {
+#desktop {
     width: 100vw;
     height: 100vh;
-    background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
+    background: url('https://wallpapercave.com/wp/wp4337624.jpg') no-repeat center center fixed;
     background-size: cover;
+    position: relative;
+}
+
+/* Icons */
+.icon-container {
+    padding: 10px;
     display: flex;
     flex-direction: column;
+    width: 100px;
 }
 
-/* Top Panel */
-.top-panel {
-    height: 30px;
-    background: rgba(0, 0, 0, 0.7);
+.desktop-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: white;
+    font-size: 12px;
+    padding: 10px 0;
+    margin-bottom: 5px;
+    border: 1px solid transparent;
+}
+
+.desktop-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.desktop-item img { width: 35px; margin-bottom: 5px; }
+
+/* Taskbar */
+#taskbar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: rgba(28, 28, 28, 0.85);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-    font-size: 13px;
-    backdrop-filter: blur(5px);
+    z-index: 100;
 }
 
-.activities { font-weight: bold; cursor: pointer; margin-right: 15px; }
-.activities:hover { color: #aaa; }
+.taskbar-left, .taskbar-right { display: flex; align-items: center; }
 
-/* Desktop Icons */
-.desktop-area {
-    flex-grow: 1;
-    padding: 20px;
-}
-
-.icon {
-    width: 80px;
-    text-align: center;
-    color: white;
-    margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.icon-graphic {
-    font-size: 40px;
-    display: block;
-    transition: transform 0.2s;
-}
-
-.icon:hover .icon-graphic {
-    transform: scale(1.1);
-}
-
-/* Bottom Dock */
-.dock-container {
-    width: 100%;
+#start-btn {
+    width: 48px;
+    height: 100%;
+    background: transparent;
+    border: none;
     display: flex;
     justify-content: center;
-    padding-bottom: 10px;
+    align-items: center;
+    transition: 0.2s;
 }
 
-.dock {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 8px;
-    border-radius: 16px;
+#start-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
+.search-box {
+    background: white;
+    height: 100%;
+    width: 200px;
     display: flex;
-    gap: 15px;
+    align-items: center;
+    padding: 0 10px;
+    margin-right: 10px;
 }
 
-.dock-item {
-    font-size: 30px;
-    cursor: pointer;
-    padding: 5px;
-    transition: margin-bottom 0.2s;
+.search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    margin-left: 5px;
 }
 
-.dock-item:hover {
-    margin-bottom: 10px;
-}
+.taskbar-apps img { margin: 0 8px; cursor: pointer; }
 
-.dock-item.active::after {
-    content: '•';
-    display: block;
-    font-size: 10px;
-    text-align: center;
+/* Right side taskbar */
+.tray-icon { padding: 0 5px; color: white; cursor: pointer; font-size: 14px; }
+.datetime {
     color: white;
+    font-size: 11px;
+    text-align: center;
+    padding: 0 10px;
+    cursor: pointer;
 }
+
+.show-desktop {
+    width: 5px;
+    height: 100%;
+    border-left: 1px solid rgba(255,255,255,0.2);
+    margin-left: 5px;
+}
+
+/* Start Menu Styling */
+#start-menu {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 350px;
+    height: 500px;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(15px);
+    color: white;
+    display: flex;
+}
+
+.win-hidden { display: none !important; }
+
+.start-sidebar {
+    width: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 10px;
+    background: rgba(0,0,0,0.2);
+}
+
+.side-item {
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.start-apps { padding: 15px; flex-grow: 1; }
+.section-label { font-size: 12px; color: #aaa; margin-bottom: 10px; }
+.app-row { padding: 8px 0; font-size: 13px; cursor: pointer; }
+.app-row:hover { background: rgba(255,255,255,0.1); }
