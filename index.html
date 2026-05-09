@@ -3,60 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Win10 Game Portal</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Win10 Desktop Simulator</title>
+    <style>
+        :root {
+            --taskbar-bg: rgba(0, 0, 0, 0.85);
+            --win-blue: #0078d7;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://images.unsplash.com/photo-1502481851512-e9e2529bbbf9?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Desktop Layout */
+        .desktop {
+            height: calc(100vh - 40px);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: flex-start;
+        }
+
+        .shortcut {
+            width: 80px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .shortcut:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .shortcut img {
+            width: 45px;
+            height: 45px;
+            margin-bottom: 5px;
+        }
+
+        .shortcut span {
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* Taskbar */
+        .taskbar {
+            height: 40px;
+            background: var(--taskbar-bg);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .start-btn {
+            width: 48px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .start-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--win-blue);
+        }
+
+        /* Window Style */
+        .window {
+            position: absolute;
+            top: 50px;
+            left: 100px;
+            width: 80%;
+            height: 75%;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: none;
+            flex-direction: column;
+            border: 1px solid #333;
+        }
+
+        .window-header {
+            height: 32px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            cursor: move;
+        }
+
+        .window-controls {
+            display: flex;
+        }
+
+        .control-btn {
+            padding: 5px 15px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .close-btn:hover {
+            background: #e81123;
+            color: white;
+        }
+
+        iframe {
+            flex-grow: 1;
+            border: none;
+        }
+
+        #clock {
+            color: white;
+            margin-left: auto;
+            padding-right: 15px;
+            font-size: 12px;
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
 
-    <div id="desktop">
-        <div class="icon" onclick="toggleWindow('minesweeper')">
-            <img src="https://img.icons8.com/color/48/000000/minesweeper.png" alt="Minesweeper">
-            <span>Minesweeper</span>
-        </div>
-
-        <div id="window-minesweeper" class="window">
-            <div class="window-header" id="header-minesweeper">
-                <div class="header-title">
-                    <img src="https://img.icons8.com/color/16/000000/minesweeper.png">
-                    <span>Minesweeper</span>
-                </div>
-                <div class="header-controls">
-                    <button class="win-btn">0</button>
-                    <button class="win-btn" onclick="toggleWindow('minesweeper')">X</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <iframe src="https://tclaws.jacwilkowski.workers.dev/" frameborder="0" allowfullscreen></iframe>
-            </div>
+    <div class="desktop">
+        <div class="shortcut" onclick="toggleWindow()">
+            <img src="https://cdn-icons-png.flaticon.com/512/686/686589.png" alt="Game Icon">
+            <span>TC Laws Game</span>
         </div>
     </div>
 
-    <div id="start-menu" class="hidden">
-        <div class="start-sidebar">
-            <div class="side-icon">☰</div>
-            <div class="side-icon-bottom">⚙️</div>
-        </div>
-        <div class="start-tiles">
-            <p>Life at a glance</p>
-            <div class="tile-container">
-                <div class="tile-inner">
-                    <div class="tile-front">Solitaire</div>
-                    <div class="tile-back">Daily Challenge</div>
-                </div>
+    <div id="gameWindow" class="window">
+        <div class="window-header">
+            <span style="font-size: 12px; color: #333;">TC Laws - Web Browser</span>
+            <div class="window-controls">
+                <div class="control-btn" onclick="toggleWindow()">_</div>
+                <div class="control-btn close-btn" onclick="toggleWindow()">✕</div>
             </div>
         </div>
+        <iframe src="https://tclaws.jacwilkowski.workers.dev/" title="Game Content"></iframe>
     </div>
 
-    <div id="taskbar">
-        <button id="start-btn">
-            <img src="https://img.icons8.com/color/24/000000/windows-10.png">
-        </button>
-        <div class="taskbar-divider"></div>
-        <div class="system-tray">
-            <span id="clock">12:00 PM</span>
+    <div class="taskbar">
+        <div class="start-btn">
+            <svg viewBox="0 0 88 88" width="20" height="20" fill="currentColor">
+                <path d="M0 12v33.4h40.7V0L0 12zm0 64l40.7 12V45.3H0V76zM44.7 0v45.2H88V6L44.7 0zM88 45.3H44.7V88L88 76V45.3z"/>
+            </svg>
         </div>
+        <div id="clock"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function toggleWindow() {
+            const win = document.getElementById('gameWindow');
+            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        // Real-time Clock
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date = now.toLocaleDateString();
+            document.getElementById('clock').innerHTML = `${time}<br>${date}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 </html>
