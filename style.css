@@ -19,26 +19,9 @@ body, html {
     display: none !important;
 }
 
-/* BIOS Styling */
-#bios-screen {
-    background-color: black;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.blinking {
-    animation: blinker 1s linear infinite;
-}
-
-@keyframes blinker {
-    50% { opacity: 0; }
-}
-
 /* Desktop Styling */
 #desktop-screen {
-    background-color: #0078D7; /* Classic Windows Blue, or use a background-image */
+    background-color: #0078D7; /* Classic Windows Blue */
     background-image: url('https://upload.wikimedia.org/wikipedia/en/e/ed/Windows_10_hero_wallpaper.jpg'); /* Example wallpaper */
     background-size: cover;
     background-position: center;
