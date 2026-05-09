@@ -3,62 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 10 Web Simulation</title>
+    <title>Win10 Game Web</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="desktop">
-        <div class="icon-container">
-            <div class="desktop-item">
-                <img src="https://img.icons8.com/color/48/000000/recycle-bin.png" alt="Recycle Bin">
-                <span>Recycle Bin</span>
-            </div>
-            <div class="desktop-item">
-                <img src="https://img.icons8.com/color/48/000000/monitor.png" alt="This PC">
-                <span>This PC</span>
-            </div>
+        <div class="icon" onclick="toggleWindow('minesweeper')">
+            <img src="https://img.icons8.com/color/48/000000/minesweeper.png" alt="Minesweeper">
+            <span>Minesweeper</span>
         </div>
 
-        <div id="start-menu" class="win-hidden">
-            <div class="start-sidebar">
-                <div class="side-item">👤</div>
-                <div class="side-item">⚙️</div>
-                <div class="side-item">⏻</div>
+        <div id="window-minesweeper" class="window">
+            <div class="window-header" id="header-minesweeper">
+                <div class="header-title">
+                    <img src="https://img.icons8.com/color/16/000000/minesweeper.png">
+                    <span>Minesweeper</span>
+                </div>
+                <div class="header-controls">
+                    <button class="win-btn">0</button> <button class="win-btn" onclick="toggleWindow('minesweeper')">X</button>
+                </div>
             </div>
-            <div class="start-apps">
-                <p class="section-label">Recently added</p>
-                <div class="app-row">Calculator</div>
-                <div class="app-row">Edge</div>
-                <div class="app-row">Notepad</div>
+            <div class="window-content">
+                <div class="game-placeholder">
+                    <h3>Game Content Here</h3>
+                    <p>Load your JS games or Iframes in this space.</p>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div id="taskbar">
-            <div class="taskbar-left">
-                <button id="start-btn" title="Start">
-                    <img src="https://img.icons8.com/color/24/000000/windows-10.png">
-                </button>
-                <div class="search-box">
-                    <span>🔍</span>
-                    <input type="text" placeholder="Type here to search">
-                </div>
-                <div class="taskbar-apps">
-                    <img src="https://img.icons8.com/color/28/000000/folder-invoices.png" title="File Explorer">
-                    <img src="https://img.icons8.com/color/28/000000/microsoft-edge.png" title="Edge">
+    <div id="start-menu" class="hidden">
+        <div class="start-sidebar">
+            <div class="side-icon">☰</div>
+            <div class="side-icon-bottom">⚙️</div>
+        </div>
+        <div class="start-tiles">
+            <p>Life at a glance</p>
+            <div class="tile-container">
+                <div class="tile-inner">
+                    <div class="tile-front">Solitaire</div>
+                    <div class="tile-back">Daily Challenge</div>
                 </div>
             </div>
-            
-            <div class="taskbar-right">
-                <div class="tray-icon">⌃</div>
-                <div class="tray-icon">🔊</div>
-                <div class="tray-icon">🌐</div>
-                <div class="datetime" id="datetime">
-                    <div id="time">12:00 PM</div>
-                    <div id="date">5/8/2026</div>
-                </div>
-                <div class="show-desktop"></div>
-            </div>
+        </div>
+    </div>
+
+    <div id="taskbar">
+        <button id="start-btn">
+            <img src="https://img.icons8.com/color/24/000000/windows-10.png">
+        </button>
+        <div class="taskbar-divider"></div>
+        <div class="system-tray">
+            <span id="clock">12:00 PM</span>
         </div>
     </div>
 
