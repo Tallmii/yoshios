@@ -1,42 +1,23 @@
 // script.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Start the clock immediately upon load
-    startClock();
+    startLinuxClock();
 });
 
-// Start Menu Toggle Logic
-const startButton = document.getElementById('start-button');
-const startMenu = document.getElementById('start-menu');
-
-startButton.addEventListener('click', () => {
-    startMenu.classList.toggle('hidden');
-});
-
-// Hide start menu if clicking outside of it
-document.addEventListener('click', (event) => {
-    if (!startButton.contains(event.target) && !startMenu.contains(event.target)) {
-        startMenu.classList.add('hidden');
-    }
-});
-
-// Real-time Clock Logic
-function startClock() {
+function startLinuxClock() {
     const clockElement = document.getElementById('clock');
     
     function updateTime() {
         const now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        
-        clockElement.innerText = `${hours}:${minutes} ${ampm}`;
+        const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
+        // Format: "May 8 21:16"
+        clockElement.innerText = now.toLocaleString('en-US', options).replace(',', '');
     }
     
-    updateTime(); // Run immediately
-    setInterval(updateTime, 1000); // Update every second
+    updateTime();
+    setInterval(updateTime, 1000);
+}
+
+function openTerminal() {
+    alert("Terminal: user@web-linux:~$ _");
 }
