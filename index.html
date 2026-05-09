@@ -3,30 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web OS Simulation</title>
+    <title>Web Linux Simulation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="desktop-screen" class="fullscreen">
-        <div class="desktop-icons">
-            <div class="icon">
-                <span>🗑️</span>
-                <p>Recycle Bin</p>
+        <div class="top-panel">
+            <div class="panel-left">
+                <span class="activities">Activities</span>
+                <span class="app-name">Terminal</span>
             </div>
-            <div class="icon">
-                <span>📁</span>
-                <p>My PC</p>
+            <div class="panel-center" id="clock">May 8 21:16</div>
+            <div class="panel-right">
+                <span>📶</span>
+                <span>🔊</span>
+                <span>🔋</span>
             </div>
-        </div>
-        
-        <div class="taskbar">
-            <button id="start-button">⊞</button>
-            <div class="time" id="clock">12:00 PM</div>
         </div>
 
-        <div id="start-menu" class="hidden">
-            <p>Start Menu Content Here</p>
+        <div class="desktop-area">
+            <div class="icon" onclick="openTerminal()">
+                <span class="icon-graphic">🐚</span>
+                <p>Terminal</p>
+            </div>
+            <div class="icon">
+                <span class="icon-graphic">📁</span>
+                <p>Home</p>
+            </div>
+        </div>
+
+        <div class="dock-container">
+            <div class="dock">
+                <div class="dock-item">🌐</div>
+                <div class="dock-item">📂</div>
+                <div class="dock-item active">🐚</div>
+                <div class="dock-item">⚙️</div>
+            </div>
         </div>
     </div>
 
