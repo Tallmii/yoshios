@@ -3,171 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 10 Pro</title>
-    <style>
-        :root {
-            --win-blue: #0078d7;
-            --taskbar-bg: rgba(20, 20, 20, 0.85);
-        }
-
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', sans-serif; background: #000; }
-
-        /* --- BIOS & BOOT (Keeping these brief) --- */
-        #bios { color: #fff; font-family: monospace; padding: 20px; display: block; }
-        #boot { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; }
-        .loader { border: 3px solid transparent; border-top: 3px solid #fff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- DESKTOP --- */
-        #desktop {
-            display: none; width: 100%; height: 100%;
-            background: url('https://wallpapercave.com/wp/wp4465113.jpg') no-repeat center center;
-            background-size: cover; position: relative;
-        }
-
-        /* --- TASKBAR --- */
-        #taskbar {
-            position: absolute; bottom: 0; width: 100%; height: 40px;
-            background: var(--taskbar-bg); backdrop-filter: blur(10px);
-            display: flex; align-items: center; z-index: 1000;
-        }
-        .start-btn { 
-            width: 48px; height: 100%; display: flex; align-items: center; justify-content: center; 
-            transition: background 0.2s; cursor: pointer;
-        }
-        .start-btn:hover { background: rgba(255,255,255,0.1); }
-        .tray { margin-left: auto; color: white; font-size: 12px; padding-right: 12px; text-align: right; cursor: default; }
-
-        /* --- START MENU --- */
-        #start-menu {
-            position: absolute; bottom: 40px; left: 0; width: 300px; height: 400px;
-            background: var(--taskbar-bg); backdrop-filter: blur(15px);
-            display: none; border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* --- WINDOW SYSTEM --- */
-        .window {
-            position: absolute; top: 100px; left: 100px; width: 400px; height: 300px;
-            background: white; border: 1px solid #0078d7; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            display: none; flex-direction: column;
-        }
-        .window-header {
-            background: white; padding: 5px 10px; display: flex; align-items: center;
-            cursor: move; user-select: none;
-        }
-        .window-title { flex-grow: 1; font-size: 12px; }
-        .window-controls div { 
-            display: inline-block; padding: 5px 12px; font-size: 14px; cursor: pointer; transition: 0.2s;
-        }
-        .close-btn:hover { background: #e81123; color: white; }
-        .window-content { flex-grow: 1; padding: 0; }
-        textarea { width: 100%; height: 100%; border: none; outline: none; resize: none; padding: 10px; box-sizing: border-box; }
-
-        /* --- ICONS --- */
-        .icon {
-            width: 80px; padding: 10px; text-align: center; color: white; 
-            font-size: 12px; cursor: pointer; text-shadow: 1px 1px 3px #000;
-        }
-        .icon:hover { background: rgba(255,255,255,0.1); }
-        .icon img { width: 40px; margin-bottom: 5px; }
-    </style>
+    <title>Windows 10 Web Edition</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="bios">Initializing...<br>AMD Ryzen 5 9600X Detected.<br>Checking VRAM... OK.<br>Booting...</div>
-    
-    <div id="boot">
-        <svg width="60" fill="#0078d7" viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.5-9.599L24 0v11.55h-13.5M0 12.45h9.75v9.45L0 20.551m10.5-8.101H24V24l-13.5-1.95"/></svg>
-        <div class="loader"></div>
+    <!-- Layer 1: BIOS -->
+    <div id="bios-layer" class="screen-layer">
+        <div class="bios-content">
+            <p>American Megatrends (C) 2026</p>
+            <p>CPU: AMD Ryzen 5 9600X @ 3.9GHz</p>
+            <p>Speed: 4100MHz</p>
+            <p>Memory Test: 32768MB OK</p>
+            <p id="bios-status">Detecting storage devices...</p>
+        </div>
     </div>
 
-    <div id="desktop">
-        <div class="icon" onclick="openWindow('notepad')">
-            <img src="https://cdn-icons-png.flaticon.com/512/3712/3712174.png">
-            <div>Notepad</div>
+    <!-- Layer 2: Boot -->
+    <div id="boot-layer" class="screen-layer hidden">
+        <div class="boot-logo">
+            <svg width="100" viewBox="0 0 24 24" fill="#0078d7">
+                <path d="M0 3.449L9.75 2.1v9.451H0m10.5-9.599L24 0v11.55h-13.5M0 12.45h9.75v9.45L0 20.551m10.5-8.101H24V24l-13.5-1.95"/>
+            </svg>
+            <div class="win-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Layer 3: Desktop -->
+    <div id="desktop-layer" class="screen-layer hidden">
+        <div class="desktop-grid">
+            <div class="desktop-item" data-app="pc">
+                <img src="https://img.icons8.com/fluent/48/000000/monitor.png" alt="PC">
+                <span>This PC</span>
+            </div>
+            <div class="desktop-item" data-app="browser">
+                <img src="https://img.icons8.com/fluent/48/000000/edge.png" alt="Edge">
+                <span>Edge</span>
+            </div>
         </div>
 
-        <div id="notepad" class="window">
-            <div class="window-header" onmousedown="dragElement(this.parentElement)">
-                <div class="window-title">Untitled - Notepad</div>
-                <div class="window-controls">
-                    <div onclick="closeWindow('notepad')" class="close-btn">✕</div>
+        <!-- Window Template (Hidden by default) -->
+        <div id="window-explorer" class="window hidden">
+            <div class="window-header">
+                <div class="header-left">
+                    <img src="https://img.icons8.com/fluent/16/000000/monitor.png">
+                    <span>This PC</span>
+                </div>
+                <div class="header-right">
+                    <button class="win-btn min">−</button>
+                    <button class="win-btn max">▢</button>
+                    <button class="win-btn close" onclick="closeApp('window-explorer')">✕</button>
                 </div>
             </div>
-            <div class="window-content">
-                <textarea placeholder="Type something..."></textarea>
+            <div class="window-body">
+                <div class="explorer-content">
+                    <div class="drive-icon">
+                        <img src="https://img.icons8.com/fluent/48/000000/hard-drive.png">
+                        <span>Local Disk (C:)</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="start-menu">
-            <div style="padding: 20px; color: white;">Pinned Apps</div>
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="start-trigger" id="start-btn">
+                <img src="https://img.icons8.com/fluent/24/000000/windows-10.png">
+            </div>
+            <div class="taskbar-apps"></div>
+            <div class="system-tray">
+                <div id="clock-display"></div>
+            </div>
         </div>
 
-        <div id="taskbar">
-            <div class="start-btn" onclick="toggleStart()">
-                <svg width="18" fill="white" viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.5-9.599L24 0v11.55h-13.5M0 12.45h9.75v9.45L0 20.551m10.5-8.101H24V24l-13.5-1.95"/></svg>
+        <!-- Start Menu -->
+        <div id="start-menu" class="hidden">
+            <div class="start-sidebar">
+                <img src="https://img.icons8.com/fluent/24/000000/user-male-circle.png">
+                <img src="https://img.icons8.com/fluent/24/000000/settings.png">
+                <img src="https://img.icons8.com/fluent/24/000000/shutdown.png">
             </div>
-            <div class="tray" id="clock"></div>
+            <div class="start-apps">
+                <p>Pinned Apps</p>
+                <div class="tile-grid">
+                    <div class="tile">Mail</div>
+                    <div class="tile">Photos</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        // 1. Boot Sequence
-        setTimeout(() => { document.getElementById('bios').style.display = 'none'; document.getElementById('boot').style.display = 'block'; }, 1500);
-        setTimeout(() => { document.getElementById('boot').style.display = 'none'; document.getElementById('desktop').style.display = 'block'; }, 4000);
-
-        // 2. Clock Logic
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerHTML = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + "<br>" + now.toLocaleDateString();
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // 3. UI Interactions
-        function toggleStart() {
-            const menu = document.getElementById('start-menu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function openWindow(id) {
-            document.getElementById(id).style.display = 'flex';
-        }
-
-        function closeWindow(id) {
-            document.getElementById(id).style.display = 'none';
-        }
-
-        // 4. Draggable Window Logic
-        function dragElement(elmnt) {
-            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            elmnt.onmousedown = dragMouseDown;
-
-            function dragMouseDown(e) {
-                e = e || window.event;
-                e.preventDefault();
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.onmouseup = closeDragElement;
-                document.onmousemove = elementDrag;
-            }
-
-            function elementDrag(e) {
-                e = e || window.event;
-                e.preventDefault();
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-            }
-
-            function closeDragElement() {
-                document.onmouseup = null;
-                document.onmousemove = null;
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
