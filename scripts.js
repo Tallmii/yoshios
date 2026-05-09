@@ -1,23 +1,33 @@
 // script.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    startLinuxClock();
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    const startBtn = document.getElementById('start-btn');
+    const startMenu = document.getElementById('start-menu');
+
+    // Toggle Start Menu
+    startBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        startMenu.classList.toggle('win-hidden');
+    });
+
+    // Close menu when clicking desktop
+    document.addEventListener('click', () => {
+        startMenu.classList.add('win-hidden');
+    });
+
+    startMenu.addEventListener('click', (e) => e.stopPropagation());
 });
 
-function startLinuxClock() {
-    const clockElement = document.getElementById('clock');
+function updateClock() {
+    const now = new Date();
     
-    function updateTime() {
-        const now = new Date();
-        const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
-        // Format: "May 8 21:16"
-        clockElement.innerText = now.toLocaleString('en-US', options).replace(',', '');
-    }
-    
-    updateTime();
-    setInterval(updateTime, 1000);
-}
+    // Time format: 9:18 PM
+    const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+    document.getElementById('time').innerText = now.toLocaleTimeString([], timeOptions);
 
-function openTerminal() {
-    alert("Terminal: user@web-linux:~$ _");
+    // Date format: 5/8/2026
+    const dateOptions = { month: 'numeric', day: 'numeric', year: 'numeric' };
+    document.getElementById('date').innerText = now.toLocaleDateString([], dateOptions);
 }
