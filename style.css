@@ -3,88 +3,93 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* Prevent scrolling */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    font-family: 'Ubuntu', sans-serif;
+    background: #2c3e50;
 }
 
 .fullscreen {
     width: 100vw;
     height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* Desktop Styling */
-#desktop-screen {
-    background-color: #0078D7; /* Classic Windows Blue */
-    background-image: url('https://upload.wikimedia.org/wikipedia/en/e/ed/Windows_10_hero_wallpaper.jpg'); /* Example wallpaper */
+    background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
-    background-position: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
-.desktop-icons {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.icon {
-    width: 60px;
-    text-align: center;
+/* Top Panel */
+.top-panel {
+    height: 30px;
+    background: rgba(0, 0, 0, 0.7);
     color: white;
-    cursor: pointer;
-    text-shadow: 1px 1px 2px black;
-}
-
-.icon span {
-    font-size: 30px;
-}
-
-.icon p {
-    margin: 5px 0 0 0;
-    font-size: 12px;
-}
-
-/* Taskbar Styling */
-.taskbar {
-    height: 40px;
-    background-color: rgba(32, 32, 32, 0.9);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
-    color: white;
+    padding: 0 15px;
+    font-size: 13px;
+    backdrop-filter: blur(5px);
 }
 
-#start-button {
-    background: none;
-    border: none;
+.activities { font-weight: bold; cursor: pointer; margin-right: 15px; }
+.activities:hover { color: #aaa; }
+
+/* Desktop Icons */
+.desktop-area {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.icon {
+    width: 80px;
+    text-align: center;
     color: white;
-    font-size: 24px;
+    margin-bottom: 20px;
     cursor: pointer;
 }
 
-#start-button:hover {
-    color: #00bfff;
+.icon-graphic {
+    font-size: 40px;
+    display: block;
+    transition: transform 0.2s;
 }
 
-#start-menu {
-    position: absolute;
-    bottom: 40px;
-    left: 0;
-    width: 300px;
-    height: 400px;
-    background-color: rgba(32, 32, 32, 0.95);
+.icon:hover .icon-graphic {
+    transform: scale(1.1);
+}
+
+/* Bottom Dock */
+.dock-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.dock {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 16px;
+    display: flex;
+    gap: 15px;
+}
+
+.dock-item {
+    font-size: 30px;
+    cursor: pointer;
+    padding: 5px;
+    transition: margin-bottom 0.2s;
+}
+
+.dock-item:hover {
+    margin-bottom: 10px;
+}
+
+.dock-item.active::after {
+    content: '•';
+    display: block;
+    font-size: 10px;
+    text-align: center;
     color: white;
-    padding: 15px;
-    border-top-right-radius: 5px;
 }
