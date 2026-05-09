@@ -1,0 +1,52 @@
+/* Variables for colors */
+:root {
+    --taskbar-color: rgba(25, 25, 25, 0.75);
+    --window-border: #0078d7;
+    --win-accent: #0078d7;
+}
+
+body { margin: 0; overflow: hidden; background: #000; color: white; font-family: 'Segoe UI', sans-serif; }
+
+.screen-layer { position: absolute; width: 100vw; height: 100vh; overflow: hidden; }
+.hidden { display: none !important; }
+
+/* BIOS Styling */
+#bios-layer { background: black; font-family: 'Courier New', Courier, monospace; padding: 20px; }
+
+/* Windows Boot */
+#boot-layer { display: flex; align-items: center; justify-content: center; background: black; }
+.win-spinner {
+    margin-top: 40px; border: 3px solid transparent; border-top: 3px solid white;
+    border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Desktop & Taskbar */
+#desktop-layer { background: url('https://wallpaperaccess.com/full/1155013.jpg') no-repeat center; background-size: cover; }
+
+.taskbar {
+    position: absolute; bottom: 0; width: 100%; height: 40px;
+    background: var(--taskbar-color); backdrop-filter: blur(12px);
+    display: flex; align-items: center; z-index: 9999;
+}
+
+.start-trigger { width: 48px; height: 100%; display: flex; align-items: center; justify-content: center; }
+.start-trigger:hover { background: rgba(255, 255, 255, 0.15); }
+
+/* Window UI */
+.window {
+    position: absolute; width: 600px; height: 400px; background: white;
+    color: black; border: 1px solid var(--window-border); box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    display: flex; flex-direction: column;
+}
+
+.window-header { padding: 8px; display: flex; justify-content: space-between; align-items: center; cursor: move; }
+.header-left { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.win-btn { border: none; background: none; padding: 5px 12px; }
+.win-btn.close:hover { background: #e81123; color: white; }
+
+/* Start Menu */
+#start-menu {
+    position: absolute; bottom: 40px; left: 0; width: 320px; height: 450px;
+    background: var(--taskbar-color); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);
+}
