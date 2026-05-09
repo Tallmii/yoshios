@@ -1,32 +1,11 @@
 // script.js
 
-// 1. The Boot Sequence Logic
 document.addEventListener('DOMContentLoaded', () => {
-    const biosScreen = document.getElementById('bios-screen');
-    const desktopScreen = document.getElementById('desktop-screen');
-    const bootText = document.getElementById('boot-text');
-
-    // Simulate lines of BIOS loading
-    setTimeout(() => {
-        bootText.innerText = "Auto-Detecting SATA Port 1... Found Drive";
-        bootText.classList.remove('blinking');
-    }, 2000);
-
-    setTimeout(() => {
-        const p = document.createElement('p');
-        p.innerText = "Booting from Hard Disk...";
-        biosScreen.appendChild(p);
-    }, 3000);
-
-    // Transition to Desktop after 5 seconds
-    setTimeout(() => {
-        biosScreen.classList.add('hidden');
-        desktopScreen.classList.remove('hidden');
-        startClock();
-    }, 5000);
+    // Start the clock immediately upon load
+    startClock();
 });
 
-// 2. Start Menu Toggle
+// Start Menu Toggle Logic
 const startButton = document.getElementById('start-button');
 const startMenu = document.getElementById('start-menu');
 
@@ -41,7 +20,7 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// 3. Real-time Clock
+// Real-time Clock Logic
 function startClock() {
     const clockElement = document.getElementById('clock');
     
