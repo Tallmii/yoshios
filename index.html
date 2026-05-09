@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Boot</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* --- BIOS STYLES --- */
+        #bios-screen {
+            color: #fff;
+            font-family: "Courier New", Courier, monospace;
+            padding: 40px;
+            display: block;
+            line-height: 1.4;
+        }
+
+        .bios-logo { color: #aaa; margin-bottom: 20px; }
+        .cursor { display: inline-block; width: 10px; height: 18px; background: #fff; animation: blink 0.8s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- WINDOWS 10 STYLES --- */
+        #win10-screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1510519133418-2417b1d3d0e4?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
+
+        #taskbar {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .start-btn { width: 30px; height: 30px; margin-right: 15px; cursor: pointer; }
+        .desktop-icons { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+        .icon { width: 60px; text-align: center; color: white; cursor: pointer; font-size: 11px; text-shadow: 1px 1px 2px #000; }
+        .icon img { width: 40px; display: block; margin: 0 auto 5px; }
+
+        /* Boot Animation */
+        #boot-logo {
+            display: none;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            width: 30px; height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(3600deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- Stage 1: Fake BIOS -->
+    <div id="bios-screen">
+        <div class="bios-logo">AMERICAN MEGTRENDS BIOS v2.10.1208</div>
+        <div id="bios-text"></div>
+        <span class="cursor"></span>
+    </div>
+
+    <!-- Stage 2: Windows Boot Logo -->
+    <div id="boot-logo">
+        <svg width="80" height="80" viewBox="0 0 100 100">
+            <path fill="#00adef" d="M0 12.402l42.332-5.733V47.52H0V12.402zm47.215-6.438L100 0v47.52H47.215V5.964zM0 52.48h42.332v35.118L0 81.865V52.48zm47.215 0H100V100l-52.785-5.964V52.48z"/>
+        </svg>
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Stage 3: Windows 10 Desktop -->
+    <div id="win10-screen">
+        <div class="desktop-icons">
+            <div class="icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/5968/5968267.png" alt="PC">
+                This PC
+            </div>
+            <div class="icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/1012/1012654.png" alt="Trash">
+                Recycle Bin
+            </div>
+        </div>
+
+        <div id="taskbar">
+            <img class="start-btn" src="https://upload.wikimedia.org/wikipedia/commons/4/48/Windows_logo_-_2012_%28blue%29.svg" alt="Start">
+            <span style="margin-left: auto;">8:32 PM<br>5/8/2026</span>
+        </div>
+    </div>
+
+    <script>
+        const biosLines = [
+            "Initializing System...",
+            "CPU: AMD Ryzen 5 9600X @ 3.9GHz",
+            "Memory Test: 32768MB OK",
+            "Detecting Primary Master... Sata Disk 500GB",
+            "Detecting Primary Slave... None",
+            "USB Devices Initialized.",
+            "Booting from Hard Disk..."
+        ];
+
+        const biosText = document.getElementById('bios-text');
+        const biosScreen = document.getElementById('bios-screen');
+        const bootLogo = document.getElementById('boot-logo');
+        const winScreen = document.getElementById('win10-screen');
+
+        let lineIndex = 0;
+
+        function typeBios() {
+            if (lineIndex < biosLines.length) {
+                biosText.innerHTML += biosLines[lineIndex] + "<br>";
+                lineIndex++;
+                setTimeout(typeBios, 600);
+            } else {
+                setTimeout(startWindowsBoot, 1000);
+            }
+        }
+
+        function startWindowsBoot() {
+            biosScreen.style.display = 'none';
+            bootLogo.style.display = 'block';
+            
+            setTimeout(() => {
+                bootLogo.style.display = 'none';
+                winScreen.style.display = 'block';
+            }, 3000);
+        }
+
+        // Start the sequence
+        window.onload = typeBios;
+    </script>
+</body>
+</html>
